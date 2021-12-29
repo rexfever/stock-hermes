@@ -1,1 +1,1 @@
-# stock-hermes
+# s-info
