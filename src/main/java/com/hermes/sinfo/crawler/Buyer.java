@@ -1,16 +1,16 @@
 package com.hermes.sinfo.crawler;
 
 public enum Buyer {
-    INSTITUTIONAL(4),
-    FOREIGN(6);
+    INSTITUTIONAL("7050"),
+    FOREIGN("9000");
 
-    private int codeOfBuyer;
+    private String codeOfBuyer;
 
-    Buyer(int codeOfBuyer) {
+    Buyer(String codeOfBuyer) {
         this.codeOfBuyer = codeOfBuyer;
     }
 
-    public int getCodeOfBuyer() {
+    public String getCodeOfBuyer() {
         return codeOfBuyer;
     }
 }
