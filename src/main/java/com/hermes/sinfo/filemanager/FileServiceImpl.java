@@ -3,16 +3,32 @@ package com.hermes.sinfo.filemanager;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class FileServiceImpl implements FileService{
+    private String path = System.getProperty("user.home") + "/Downloads";
+    @Override
+    public ArrayList<String> getFileNames() {
+        ArrayList<String> fileNames = new ArrayList<>();
+        File[] files = new File(path).listFiles();
+        String EXTENSIONS = ".csv";
+        for(File file : files){
+            if(file.isFile()){
+                if(EXTENSIONS.contains(file.getName().substring(file.getName().lastIndexOf(".")))){
+                    fileNames.add(file.toString());
+                }
+            }
+        }
+        Collections.sort(fileNames);
+        return fileNames;
+    }
 
     @Override
-    public List<List<String>> readFile() {
+    public List<List<String>> readCSV(String fileName) {
         List<List<String>> csvList = new ArrayList<List<String>>();
-        String path = System.getProperty("user.home") + "/Downloads";
 
-        File csv = new File(path);
+        File csv = new File(fileName);
         BufferedReader br = null;
         String line = "";
 
