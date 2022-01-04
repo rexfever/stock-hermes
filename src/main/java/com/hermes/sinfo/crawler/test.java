@@ -10,27 +10,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class test {
 
     public static void main(String[] args) {
-        //Crawler crawler = new Crawler();
-        String path = System.getProperty("user.home") + "/Downloads";
-        ArrayList<String> fileNames = new ArrayList<>();
-        File[] files = new File(path).listFiles();
-        String EXTENSIONS = ".csv";
-        for(File file : files){
-            if(file.isFile()){
-                if(EXTENSIONS.contains(file.getName().substring(file.getName().lastIndexOf(".")))){
-                    System.out.println("file = " + file);
-                    fileNames.add(file.toString());
-                }
-            }
+        Crawler crawler = new Crawler();
+        FileService fileService = new FileServiceImpl();
+        crawler.getCSVfiles();
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        Collections.sort(fileNames);
-        for(String name : fileNames){
-            System.out.println("name = " + name);
+        List<List<List<String>>> datas = new ArrayList<>();
+        ArrayList<String> fileNames = fileService.getFileNames();
+        for (String name : fileNames) {
+            datas.add(fileService.readCSV(name));
         }
-
+        for (List<List<String>> data : datas){
+            System.out.println("data = " + data);
+        }
     }
 }

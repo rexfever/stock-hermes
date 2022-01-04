@@ -31,7 +31,9 @@ public class Crawler {
 
     private String base_url;
 
-    public Crawler() {
+    public Crawler() {}
+
+    public void getCSVfiles() {
 
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
