@@ -29,7 +29,7 @@ public class Crawler {
     public static String directoryName = path.toAbsolutePath().toString();
     public static String WEB_DRIVER_PATH = directoryName + "/chromedriver";
 
-    private String base_url;
+    private String base_url = "http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020303";
 
     public Crawler() {}
 
@@ -39,7 +39,6 @@ public class Crawler {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formatedNow = now.format(formatter);
         formatedNow = "20211230";
-        base_url = "http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020303";
 
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
         ChromeOptions options = new ChromeOptions();

@@ -7,15 +7,19 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileServiceImpl implements FileService{
-    private String path = System.getProperty("user.home") + "/Downloads";
     @Override
-    public ArrayList<String> getFileNames() {
-        ArrayList<String> fileNames = new ArrayList<>();
+    public List<String> getFileList() {
+        String path = System.getProperty("user.home") + "/Downloads";
+        List<String> fileNames = new ArrayList<>();
         File[] files = new File(path).listFiles();
         String EXTENSIONS = ".csv";
         for(File file : files){
             if(file.isFile()){
+                if(file.getName().indexOf("data_") < 0){
+                    continue;
+                }
                 if(EXTENSIONS.contains(file.getName().substring(file.getName().lastIndexOf(".")))){
+                    System.out.println("file = " + file);
                     fileNames.add(file.toString());
                 }
             }
@@ -25,9 +29,8 @@ public class FileServiceImpl implements FileService{
     }
 
     @Override
-    public List<List<String>> readCSV(String fileName) {
+    public List<List<String>> readFile(String fileName) {
         List<List<String>> csvList = new ArrayList<List<String>>();
-
         File csv = new File(fileName);
         BufferedReader br = null;
         String line = "";

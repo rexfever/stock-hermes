@@ -17,6 +17,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 	implementation 'org.jsoup:jsoup:1.14.3'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	runtimeOnly 'com.h2database:h2'
 }
 
 test {

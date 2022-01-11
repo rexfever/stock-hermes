@@ -1,11 +1,10 @@
 package com.hermes.sinfo.filemanager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface FileService {
-    public ArrayList<String> getFileNames();
-    public List<List<String>> readCSV(String fileName);
+    public List<String> getFileList();
+    public List<List<String>> readFile(String fileName);
     void saveData();
 
 }
