@@ -31,7 +31,9 @@ public class Crawler {
 
     private String base_url = "http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020303";
 
-    public Crawler() {
+    public Crawler() {}
+
+    public void getCSVfiles() {
 
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
