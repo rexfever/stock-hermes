@@ -13,7 +13,11 @@ public class Stock {
     String market;
     String buyer;
 
-    public Stock(String code, String name, String date, String svoluem, String bvolume, String pbvolume, String spayment, String bpayment, String psvolume, String market, String buyer) {
+    public Stock() {
+
+    }
+
+    public void setValues(String code, String name, String date, String svoluem, String bvolume, String pbvolume, String spayment, String bpayment, String psvolume, String market, String buyer) {
         this.code = code;
         this.name = name;
         this.date = date;

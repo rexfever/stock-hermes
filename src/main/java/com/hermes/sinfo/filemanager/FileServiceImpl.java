@@ -1,5 +1,7 @@
 package com.hermes.sinfo.filemanager;
 
+import com.hermes.sinfo.domain.Stock;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,20 +31,28 @@ public class FileServiceImpl implements FileService{
     }
 
     @Override
-    public List<List<String>> readFile(String fileName) {
-        List<List<String>> csvList = new ArrayList<List<String>>();
+    public List<Stock> readFile(String fileName, Integer fileOrder) {
+        List<Stock> stocks = new ArrayList<>();
         File csv = new File(fileName);
         BufferedReader br = null;
         String line = "";
-
+        String market = "KOSPI";
+        String buyer = "기관";
+        if( fileOrder > 1) {
+            market = "KOSDAQ";
+        }
+        if(fileOrder%2 == 1){
+            buyer = "외국인";
+        }
         try {
             br = new BufferedReader(new FileReader(csv));
             while ((line = br.readLine()) != null) { // readLine()은 파일에서 개행된 한 줄의 데이터를 읽어온다.
-                List<String> aLine = new ArrayList<String>();
-                String[] lineArr = line.split(","); // 파일의 한 줄을 ,로 나누어 배열에 저장 후 리스트로 변환한다.
-                aLine = Arrays.asList(lineArr);
-                csvList.add(aLine);
+                Stock stock = new Stock();
+                String[] values = line.split(","); // 파일의 한 줄을 ,로 나누어 배열에 저장 후 리스트로 변환한다.
+                stock.setValues(values[0],values[1],"20220110", values[2],values[3],values[4],values[5],values[6],values[7],market,buyer);
+                stocks.add(stock);
             }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -56,10 +66,6 @@ public class FileServiceImpl implements FileService{
                 e.printStackTrace();
             }
         }
-        return csvList;
-    }
-    @Override
-    public void saveData() {
-
+        return stocks;
     }
 }

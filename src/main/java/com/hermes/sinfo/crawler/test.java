@@ -1,5 +1,6 @@
 package com.hermes.sinfo.crawler;
 
+import com.hermes.sinfo.domain.Stock;
 import com.hermes.sinfo.filemanager.FileService;
 import com.hermes.sinfo.filemanager.FileServiceImpl;
 import com.hermes.sinfo.repository.JdbcTemplateTradeLogRepository;
@@ -19,6 +20,7 @@ public class test {
 
     public static void main(String[] args) {
         //Crawler crawler = new Crawler();
+        /*
         String path = System.getProperty("user.home") + "/Downloads";
         List<String> fileNames = new ArrayList<>();
         File[] files = new File(path).listFiles();
@@ -35,17 +37,22 @@ public class test {
             }
         }
         Collections.sort(fileNames);
+*/
 
 
-
-        List<List<String>> csvList = new ArrayList<>();
+        List<Stock> stockList = new ArrayList<>();
         FileService fileService = new FileServiceImpl();
-
-
+        List<String> fileNames = fileService.getFileList();
+        int order = 0;
         for(String name : fileNames){
-            csvList = fileService.readFile(name);
+            stockList = fileService.readFile(name,order);
+            order++;
             System.out.println("name = " + name);
+
         }
-        System.out.println("csvList = " + csvList.toArray().length);
+        System.out.println("stockList = " + stockList.toArray().length);
+
+        TradeLogRepository tradeLogRepository = new JdbcTemplateTradeLogRepository();
+        int[] count = tradeLogRepository.save(stockList);
     }
 }
