@@ -1,24 +1,27 @@
 package com.hermes.sinfo.crawler;
 
+import com.hermes.sinfo.DBConfig;
+import com.hermes.sinfo.controller.StockController;
 import com.hermes.sinfo.domain.Stock;
-import com.hermes.sinfo.filemanager.FileService;
-import com.hermes.sinfo.filemanager.FileServiceImpl;
 import com.hermes.sinfo.repository.JdbcTemplateTradeLogRepository;
+import com.hermes.sinfo.repository.StockDAO;
 import com.hermes.sinfo.repository.TradeLogRepository;
-import org.springframework.jdbc.datasource.DelegatingDataSource;
+import com.hermes.sinfo.service.FileService;
+import com.hermes.sinfo.service.StockService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import javax.sql.DataSource;
-import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class test {
 
+    StockController stockController;
+    private static StockDAO stockDAO;
     public static void main(String[] args) {
+
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DBConfig.class);
+        stockDAO = ctx.getBean(StockDAO.class);
         //Crawler crawler = new Crawler();
         /*
         String path = System.getProperty("user.home") + "/Downloads";
@@ -41,7 +44,7 @@ public class test {
 
 
         List<Stock> stockList = new ArrayList<>();
-        FileService fileService = new FileServiceImpl();
+        FileService fileService = new FileService();
         List<String> fileNames = fileService.getFileList();
         int order = 0;
         for(String name : fileNames){
@@ -52,7 +55,13 @@ public class test {
         }
         System.out.println("stockList = " + stockList.toArray().length);
 
-        TradeLogRepository tradeLogRepository = new JdbcTemplateTradeLogRepository();
-        int[] count = tradeLogRepository.save(stockList);
+        stockDAO.save(stockList);
+        ctx.close();
+
     }
+
+
+
+
+
 }
