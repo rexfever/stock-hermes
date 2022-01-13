@@ -1,28 +1,22 @@
 package com.hermes.sinfo.repository;
 
 import com.hermes.sinfo.domain.Stock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public class JdbcTemplateTradeLogRepository implements TradeLogRepository{
+public class StockDAO {
 
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    public JdbcTemplateTradeLogRepository(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
+    public StockDAO(DataSource dataSource){
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
     public int[] save(List<Stock> stocks) {
         String sql = "INSERT INTO TRADE_LOG( LOG_CODE, LOG_DATE, LOG_NAME, LOG_SVOLUME, LOG_BVOLUME, LOG_PSVOLUME, LOG_PBVOLUME, LOG_SPAYENNT, LOG_BPAYMENT, LOG_MARKET, LOG_BUYER) values (?,?,?,?,?,?,?,?,?,?,?)";
         return jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
@@ -47,20 +41,5 @@ public class JdbcTemplateTradeLogRepository implements TradeLogRepository{
                 return stocks.size();
             }
         });
-    }
-
-    @Override
-    public Stock getTop5ByInstitutional(Integer today) {
-        return null;
-    }
-
-    @Override
-    public Stock getTop5ByForeiger(Integer today) {
-        return null;
-    }
-
-    @Override
-    public Stock getTop10ByPayment(Integer today) {
-        return null;
     }
 }

@@ -1,15 +1,17 @@
-package com.hermes.sinfo.filemanager;
+package com.hermes.sinfo.service;
 
 import com.hermes.sinfo.domain.Stock;
+import com.hermes.sinfo.repository.JdbcTemplateTradeLogRepository;
+import com.hermes.sinfo.repository.TradeLogRepository;
 
+import javax.sql.DataSource;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class FileServiceImpl implements FileService{
-    @Override
+public class FileService {
+
     public List<String> getFileList() {
         String path = System.getProperty("user.home") + "/Downloads";
         List<String> fileNames = new ArrayList<>();
@@ -30,7 +32,6 @@ public class FileServiceImpl implements FileService{
         return fileNames;
     }
 
-    @Override
     public List<Stock> readFile(String fileName, Integer fileOrder) {
         List<Stock> stocks = new ArrayList<>();
         File csv = new File(fileName);
@@ -68,4 +69,6 @@ public class FileServiceImpl implements FileService{
         }
         return stocks;
     }
+
 }
+
