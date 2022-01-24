@@ -11,7 +11,9 @@ import com.hermes.sinfo.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class test {
@@ -20,10 +22,8 @@ public class test {
     private static StockDAO stockDAO;
     public static void main(String[] args) {
 
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DBConfig.class);
-        stockDAO = ctx.getBean(StockDAO.class);
-        //Crawler crawler = new Crawler();
-        /*
+        Crawler crawler = new Crawler();
+        //crawler.getCSVfiles();
         String path = System.getProperty("user.home") + "/Downloads";
         List<String> fileNames = new ArrayList<>();
         File[] files = new File(path).listFiles();
@@ -40,12 +40,11 @@ public class test {
             }
         }
         Collections.sort(fileNames);
-*/
+
 
 
         List<Stock> stockList = new ArrayList<>();
         FileService fileService = new FileService();
-        List<String> fileNames = fileService.getFileList();
         int order = 0;
         for(String name : fileNames){
             stockList = fileService.readFile(name,order);
@@ -55,8 +54,7 @@ public class test {
         }
         System.out.println("stockList = " + stockList.toArray().length);
 
-        stockDAO.save(stockList);
-        ctx.close();
+
 
     }
 
