@@ -1,6 +1,11 @@
 package com.hermes.sinfo.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Stock {
+    @Id
     String code;
     String name;
     String date;
